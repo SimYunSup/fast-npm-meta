@@ -13,9 +13,8 @@ export async function handlePackagesQuery<T extends object>(
 
   const throwError = !(query.throw === 'false' || query.throw === false)
 
-  const raw = decodeURIComponent(event.context.params.pkg)
-
-  const specs = raw.split('+').filter(Boolean)
+  // FIXME: Handle when version with build metadata is requested
+  const specs = event.context.params.pkg?.split('+').filter(Boolean).map(decodeURIComponent)
 
   // Record the spec index to keep the result order consistent.
   const validSpecs: [idx: number, ParsedSpec][] = []
